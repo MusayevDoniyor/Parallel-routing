@@ -4,11 +4,10 @@ import Link from "next/link";
 const Products = async () => {
   const response = await api.get("/products");
   const products = await response.data;
-  console.log(products);
 
   return (
     <div className="flex-1 p-4 bg-gray-100 min-h-screen">
-      <h1 className="text-center text-3xl font-bold mb-8 border-b-4 border-black py-3 rounded-lg bg-[#333] text-white sticky top-0 z-10">
+      <h1 className="text-center text-3xl font-bold mb-8 border-b-4 border-blue-500 py-3 rounded-lg bg-[#333] text-white sticky top-1 z-10">
         Products
       </h1>
 

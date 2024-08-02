@@ -1,13 +1,35 @@
 import React from "react";
+import api from "@/api/api";
+import Link from "next/link";
 
-const Users = () => {
+const DefaultUsers = async () => {
+  const response = await api.get("/users");
+  const users = await response.data;
+  console.log(users);
+
   return (
-    <div className="flex-1 shadow-lg p-1">
-      <h1 className="text-center text-3xl mb-7 border-b-2 border-[#333] py-2 rounded-lg sticky top-1 bg-blue-500 items-cente bg-opacity-70 text-white r">
+    <div className="flex-1 p-4 bg-gray-100 min-h-screen">
+      <h1 className="text-center text-3xl font-bold mb-8 border-b-4 border-[#333] py-3 rounded-lg bg-blue-500 text-white sticky top-1 z-10">
         Users
       </h1>
+
+      <ul className="flex flex-col gap-4">
+        {users.map((user) => (
+          <li
+            className="bg-white shadow-md rounded-lg py-3 px-5 text-lg transition-transform transform hover:scale-105 hover:shadow-xl cursor-pointer"
+            key={user.id}
+          >
+            <Link
+              className="text-gray-800 hover:text-blue-600"
+              href={`dashboard/${user.id}`}
+            >
+              {user.name.firstname.toUpperCase()}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default Users;
+export default DefaultUsers;

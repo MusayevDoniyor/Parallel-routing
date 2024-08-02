@@ -1,9 +1,13 @@
 import React from "react";
 
-const Layout = ({ products, users }) => {
+const Layout = ({ children, products, users }) => {
   return (
-    <div className="flex flex-col md:flex-row gap-5 min-h-screen">
-      {products} {users}
+    <div className="min-h-screen">
+      {children}
+
+      <div className="flex flex-col md:flex-row gap-5 min-h-screen">
+        {products} {users}
+      </div>
     </div>
   );
 };

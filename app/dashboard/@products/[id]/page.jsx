@@ -1,21 +1,23 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
 import api from "@/api/api";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import ProductSkeleton from "./loading";
 
 const Product = () => {
-  const [product, setProduct] = useState("");
-  const params = useParams();
+  const [product, setProduct] = useState(null);
   const router = useRouter();
+  const params = useParams();
   const [loading, setLoading] = useState(true);
-
-  console.log(params.id);
 
   useEffect(() => {
     const fetchProduct = async () => {
+      if (!params.id) {
+        console.error("No product ID found");
+        return;
+      }
+
       try {
         const response = await api.get(`/products/${params.id}`);
 
@@ -24,8 +26,6 @@ const Product = () => {
         }
 
         const productData = response.data;
-        console.log(product);
-
         setProduct(productData);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -35,7 +35,7 @@ const Product = () => {
     };
 
     fetchProduct();
-  }, []);
+  }, [params.id]); // Add params.id to dependency array
 
   if (loading) {
     return <ProductSkeleton />;
